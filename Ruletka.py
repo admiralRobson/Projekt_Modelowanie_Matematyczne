@@ -82,39 +82,38 @@ def martingale_system(kwota_startowa,liczbagier,ratiowin):
 			kwota_startowa =-stawka
 			stawka = stawka *2
 	return kwota_startowa
-
+def dAlembert_system(kwota_startowa,liczbagier,ratiowin):
+	#gracz_wybor = rnd.randint(0,36)
+	# polaczenie sytemu plaskiego plus d'Alembert
+	
+	ruletka_losowanie = np.random.randint(0,36,liczbagier)
+	stawka = kwota_startowa/liczbagier
+	for losowanie in ruletka_losowanie:
+		if losowanie%2==0:
+			kwota_startowa += (ratiowin*stawka)
+		else:
+			kwota_startowa =-stawka
+			stawka +=1
+	return kwota_startowa
 
 # Tworzymy tablice wyników
 wyniki_gry_system_plaski = []
 wyniki_gry_system_martingale = []
+wyniki_gry_system_dAlembert = []
 # Generujemy liczbe testów jako rozmiar tablicy wyniki_gry
 liczbatestow = 100
 testy = np.arange(1,liczbatestow+1)
 for test in range(0,liczbatestow):
 	flatprofit = flat_system(startowa_suma,liczba_gier,35)-startowa_suma
 	martingaleprofit = martingale_system(startowa_suma,liczba_gier,35)-startowa_suma
+	dAlembertprofit = dAlembert_system(startowa_suma,liczba_gier,35) - startowa_suma
 	wyniki_gry_system_plaski.append(flatprofit)
 	wyniki_gry_system_martingale.append(martingaleprofit)
+	wyniki_gry_system_dAlembert.append(dAlembertprofit)
 wyniki_gry_system_plaski = np.array(wyniki_gry_system_plaski)
 wyniki_gry_system_martingale = np.array(wyniki_gry_system_martingale)
+print("Gra system plaskim " + str(sum(wyniki_gry_system_plaski)))
+print("Gra system Maringale " + str(sum(wyniki_gry_system_martingale)))
+print("Gra system d'Alembert " + str(sum(wyniki_gry_system_dAlembert)))
 
-fig = plt.figure()
-
-plt.subplot(1, 2, 1)
-plt.bar(liczbatestow, wyniki_gry_system_plaski)
-plt.xlabel('Numer wizyty w kasynie')
-plt.ylabel('Zysk z serii 10 gier')
-plt.title('Analiza plaskiego systemu gry w kasynie '+str(liczbatestow)+" wizyt w kasynie")
-plt.grid()
-
-
-plt.subplot(1, 2, 2)
-plt.bar(liczbatestow, wyniki_gry_system_martingale)
-plt.xlabel('Numer wizyty w kasynie')
-plt.ylabel('Zysk z serii 10 gier')
-plt.title('Analiza plaskiego systemu gry w kasynie '+str(liczbatestow)+" wizyt w kasynie")
-plt.grid()
-
-
-plt.show()
 
