@@ -112,8 +112,9 @@ for test in range(0,liczbatestow):
 	wyniki_gry_system_dAlembert.append(dAlembertprofit)
 wyniki_gry_system_plaski = np.array(wyniki_gry_system_plaski)
 wyniki_gry_system_martingale = np.array(wyniki_gry_system_martingale)
+# Wywolanie sumy wynikow
 print("Gra system plaskim " + str(sum(wyniki_gry_system_plaski)))
 print("Gra system Maringale " + str(sum(wyniki_gry_system_martingale)))
 print("Gra system d'Alembert " + str(sum(wyniki_gry_system_dAlembert)))
 
-
+#
